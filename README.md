@@ -55,6 +55,8 @@ This:
 - Using the Relay `@connection` pattern, you have to traverse the connection by going through the edges, to the individual nodes, to get access to the elements inside the connection.
 - There are no specific data requirements for this component `LinkList`, so we just include those for `Link` (you should include the data dependencies of the component's children)
 
+Above example code can be found [here](https://github.com/yosufali/hackernews-react-relay/blob/master/src/components/LinkList.js).
+
 These data dependencies are passed up to the root of the Relay container tree, the `QueryRenderer`, which sits in a parent component.
 
 ---
@@ -121,6 +123,7 @@ We're:
 - - if the props are available we use them and render the relevant components by passing down the propsk
 - - otherwise the network request is ongoing so we just render a loading state to the user.
 
+Above example code can be found [here](https://github.com/yosufali/hackernews-react-relay/blob/master/src/components/LinkListPage.js).
 
 ---
 
