@@ -45,8 +45,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "relay": "relay-compiler --src ./src --schema ./schema.graphql"
+    "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
     "babel-plugin-relay": "^1.3.0",
