@@ -6,7 +6,7 @@ class LinkList extends Component {
   render() {
     return (
       <div>
-        {this.props.viewe.allLinks.edges.map(({node}) =>
+        {this.props.viewer.allLinks.edges.map(({node}) =>
           <Link key={node.__id} link={node} />
         )}
       </div>

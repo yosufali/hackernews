@@ -28,7 +28,7 @@ class LinkListPage extends Component {
           if (error) {
             return <div>{error.message}</div>
           } else if (props) {
-            return <LinkList view={props.viewer} />
+            return <LinkList viewer={props.viewer} />
           }
           return <div> Loading </div>
         }}
