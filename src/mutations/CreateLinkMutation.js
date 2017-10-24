@@ -10,7 +10,7 @@ import environment from '../Environment'
 // $input is the arguments that we want to pass when creating a new link
 //   i.e. the url and description of the link
 // createLink is the field of the mutation (passing in the above input)
-// the specifying the payload we want returned from the server after the mutation
+// then specifying the payload we want returned from the server after the mutation
 const mutation = graphql`
   mutation CreateLinkMutation($input: CreateLinkInput!) {
     createLink(input: $input) {

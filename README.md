@@ -34,7 +34,7 @@ Above example code can be found [here](https://github.com/yosufali/hackernews-re
 
 The `Link` component above is used within a `LinkList` component. The fragment for `LinkList` follows a similar style:
 
-```javascript
+```graphql
 export default createFragmentContainer(LinkList, graphql`
   fragment LinkList_viewer on Viewer {
     allLinks(last: 100,orderBy: createdAt_DESC) @connection(key: "LinkList_allLinks", filters:[]) {
@@ -82,7 +82,7 @@ import environment from '../Environment';
 
 The root query will include the fragments of the children, just like the fragment in the previous component, to make sure they're taken into account when they're sent to the server:
 
-```javascript
+```graphql
 const LinkListPageQuery = graphql`
   query LinkListPageQuery {
     viewer {
@@ -131,6 +131,8 @@ You need to run the `react-compiler` to compile all the graphql code. You can do
 
 `relay-compiler --src ./src --schema ./schema.graphql`
 
+You can also put this in as a script in your `package.json` file, and run it using npm: `npm run relay`.
+
 However, you instead can configure `babel-plugin-relay` which will compile everything for you. (You also need to do this anyway in order to run the application.) You will need to eject from `create-react-app` to do this in order to do custom configurations.
 
 ```json
@@ -145,3 +147,98 @@ However, you instead can configure `babel-plugin-relay` which will compile every
 ```
 
 To inspect what what the actual query that is sent to the server looks like, you can go to the network tab of your browser's dev tools.
+
+
+## GraphQL Mutations
+
+Assuming you have a backend setup, to create a mutation you need the component that triggers the Mutation and the actual mutation itself.
+
+If we're adding new links to a list of links, you could have a simple form component class, `CreateLink.js`, that has a submit button which triggers a call to a `_createLink()` function within the class:
+
+```javascript
+import CreateLinkMutation from '../mutations/CreateLinkMutation'
+```
+
+```javascript
+<div
+  className='button'
+  onClick={() => this._createLink()}
+>
+  submit
+</div>
+```
+
+```javascript
+_createLink = () => {
+  const { description, url } = this.state
+  CreateLinkMutation(description, url, () => console.log(`Mutation completed`))
+}
+```
+
+(Above example code can be found [here](https://github.com/yosufali/hackernews-react-relay/blob/master/src/components/CreateLink.js))
+
+What's happening above is
+- we import the Mutation
+- within the class we have the form with the submit button and
+- the data to be sent to the server (that was entered by the user in the form) is retrieved from the state. Then the imported mutation is called, passing in this data and a callback to be executed once the mutation is complete.
+
+The actual function that is called from the component is an anonymous one in `CreateLinkMutation.js`:
+
+```javascript
+export default (description, url, callback) => {
+
+  const variables = {
+    input: {
+      description,
+      url,
+      clientMutationId: ""
+    },
+  }
+  commitMutation(
+    environment,
+    {
+      mutation,
+      variables,
+
+      onCompleted: () => {
+        callback()
+      },
+      onError: err => console.error(err),
+    },
+  )
+}
+```
+This function:
+-  takes the data and the callback that was passed to it
+- wraps the data in an input object which corresponds to the `$input` object that is passed into the mutation (below)
+- triggers `commitMutation`, passing in the `environment` (so Relay knows about the correct endpoint), the actual mutation and the variables we've prepared
+- then it calls the provided callback once the mutation is complete.
+
+(`clientMutationId` is included for historical reasons, it's no longer needed in Relay Modern)
+
+Within the same file, you have the actual mutation itself:
+
+```graphql
+const mutation = graphql`
+  mutation CreateLinkMutation($input: CreateLinkInput!) {
+    createLink(input: $input) {
+      link {
+        id
+        createdAt
+        url
+        description
+      }
+    }
+  }
+`
+```
+
+`$input` is the arguments we want to pass to the server when creating new links (i.e. the description and url of the link).
+
+`createLink` is the field of the mutation, with the aforementioned `input` passed in.
+
+Then we specify the payload that we want returned from the server after the mutation: `id`, `createdAt`, `url` and `description`.
+
+Remember to run the relay-compiler (`npm run relay`) to compile the GraphQL mutation code before attempting to run the application.
+
+(Above example code can be found [here]())
