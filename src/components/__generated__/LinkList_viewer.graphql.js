@@ -9,9 +9,9 @@
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
 export type LinkList_viewer = {|
-  +allLinks: {|
+  +allLinks: ?{|
     +edges: ?$ReadOnlyArray<?{|
-      +node: {| |};
+      +node: ?{| |};
     |}>;
   |};
 |};
@@ -63,79 +63,51 @@ const fragment /*: ConcreteFragment*/ = {
                   "kind": "FragmentSpread",
                   "name": "Link_link",
                   "args": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "type": "LinkConnection",
-          "selections": [
-            {
-              "kind": "LinkedField",
-              "alias": null,
-              "args": null,
-              "concreteType": "LinkEdge",
-              "name": "edges",
-              "plural": true,
-              "selections": [
+                },
                 {
                   "kind": "ScalarField",
                   "alias": null,
                   "args": null,
-                  "name": "cursor",
-                  "storageKey": null
-                },
-                {
-                  "kind": "LinkedField",
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Link",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "kind": "ScalarField",
-                      "alias": null,
-                      "args": null,
-                      "name": "__typename",
-                      "storageKey": null
-                    }
-                  ],
+                  "name": "__typename",
                   "storageKey": null
                 }
               ],
               "storageKey": null
             },
             {
-              "kind": "LinkedField",
+              "kind": "ScalarField",
               "alias": null,
               "args": null,
-              "concreteType": "PageInfo",
-              "name": "pageInfo",
-              "plural": false,
-              "selections": [
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "args": null,
-                  "name": "hasPreviousPage",
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "args": null,
-                  "name": "startCursor",
-                  "storageKey": null
-                }
-              ],
+              "name": "cursor",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
+              "name": "hasPreviousPage",
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "args": null,
+              "name": "startCursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null

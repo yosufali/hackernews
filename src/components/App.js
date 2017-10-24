@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
-import '../styles/App.css';
-import LinkListPage from './LinkListPage.js';
+import React, { Component } from 'react'
+import '../styles/App.css'
+import LinkListPage from './LinkListPage.js'
+import CreateLink from './CreateLink'
 
 class App extends Component {
   render() {
     return (
-      <LinkListPage />
+      <CreateLink />
     );
   }
 }
