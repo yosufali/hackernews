@@ -19,6 +19,10 @@ const mutation = graphql`
         createdAt
         url
         description
+        postedBy {
+          id
+          name
+        }
       }
     }
   }
@@ -28,7 +32,7 @@ const mutation = graphql`
 // An anonymous function that takes the arguents that we want the caller to
 //   provide when they want to create a new link on the backend
 // Accepts the data, and a callback to execute once the mutation is performed
-export default (description, url, callback) => {
+export default (postedById, description, url, callback) => {
   // 4
   // wrapping the desc and url in an input object which corresponds to the
   //   input object being passed into the mutation above
@@ -36,6 +40,7 @@ export default (description, url, callback) => {
   //   (not required anymore with Relay Modern)
   const variables = {
     input: {
+      postedById,
       description,
       url,
       clientMutationId: ""
