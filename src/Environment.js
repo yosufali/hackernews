@@ -11,8 +11,7 @@ const {
 // 2
 const store = new Store(new RecordSource())
 
-// 3
-const network = Network.create((operation, variables) => {
+export const fetchQuery = (operation, variables) => {
   // 4
   return fetch('https://api.graph.cool/relay/v1/cj7kssuuk03mp0178cksg46h5', {
     method: 'POST',
@@ -28,7 +27,10 @@ const network = Network.create((operation, variables) => {
   }).then(response => {
     return response.json()
   })
-})
+}
+
+// 3
+const network = Network.create(fetchQuery)
 
 // 5
 const environment = new Environment({
